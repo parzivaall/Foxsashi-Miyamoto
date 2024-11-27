@@ -31254,26 +31254,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1736856205035712055, guid: 65bc252d2bada6213838913d14f1aa64, type: 3}
-      propertyPath: deathExplosion
-      value: 
-      objectReference: {fileID: 4853755127233647542, guid: dbc1f73493ce877949e44a366cdd8a2c, type: 3}
-    - target: {fileID: 3078131443718009161, guid: 65bc252d2bada6213838913d14f1aa64, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583547142731224834, guid: 65bc252d2bada6213838913d14f1aa64, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8938413958086465810, guid: 65bc252d2bada6213838913d14f1aa64, type: 3}
-      propertyPath: m_Size.x
-      value: 0.06550282
-      objectReference: {fileID: 0}
-    - target: {fileID: 8938413958086465810, guid: 65bc252d2bada6213838913d14f1aa64, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.055967137
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

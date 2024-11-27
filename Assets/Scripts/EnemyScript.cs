@@ -22,14 +22,14 @@ public class EnemyScript : MonoBehaviour
     }
 
     public void OnAttackEvent(){
-        animator.SetBool("IsAttacking", true);
+        animator.SetTrigger("IsAttacking");
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Gem"))
         {
-            animator.SetBool("IsAttacking", true);
+            animator.SetTrigger("IsAttacking");
             health --;
             if(health <= 0){
                 Instantiate(deathExplosion, collision.transform.position, Quaternion.identity);
@@ -37,9 +37,5 @@ public class EnemyScript : MonoBehaviour
             }
             
         }
-    }
-
-    void FixedUpdate(){
-        animator.SetBool("IsAttacking", false);
     }
 }
