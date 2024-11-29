@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour
 
     public Animator animator;
     public GameObject deathExplosion;
-    int health = 1;
+    private Collider2D gemCollider = null;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +29,40 @@ public class EnemyScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Gem"))
         {
-            animator.SetTrigger("IsAttacking");
-            health --;
-            if(health <= 0){
-                Instantiate(deathExplosion, collision.transform.position, Quaternion.identity);
-                Destroy(collision.gameObject);
+            gemCollider = collision;
+            StartCoroutine(RunEveryTwoSeconds());
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Gem"))
+        {
+            gemCollider = null;
+            StopCoroutine(RunEveryTwoSeconds());
+        }
+    }
+
+    IEnumerator RunEveryTwoSeconds()
+    {
+        while (true)
+        {
+            if (gemCollider != null)
+            {
+                animator.SetTrigger("IsAttacking");
+                EnvManager.Instance.setHealth(-10);
+                Debug.Log(EnvManager.Instance.getHealth());
+                if (EnvManager.Instance.getHealth() <= 0)
+                {
+                    Instantiate(deathExplosion, gemCollider.transform.position, Quaternion.identity);
+                    Destroy(gemCollider.gameObject);
+                }
+            } else
+            {
+                Debug.LogWarning("Gem collider is null");
             }
-            
+            yield return new WaitForSeconds(2f);
         }
     }
 }
+

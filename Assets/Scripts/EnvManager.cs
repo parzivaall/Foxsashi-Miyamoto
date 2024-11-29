@@ -10,6 +10,7 @@ public class EnvManager : MonoBehaviour
     private int maxHealth = 100;
     private int health;
     public AudioSource damageSFX;
+    public AudioSource gameOverSFX;
     private string currentSceneName;
     public TextAnimator textAnimator;
     public MusicOrganizer musicOrganizer;
@@ -33,6 +34,8 @@ public class EnvManager : MonoBehaviour
         // Subscribe to scene change event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        resetHealth();
+
         for (int i = 0; i < 3; i++){
             if (PlayerPrefs.HasKey("Highscore: " + (i+1))){
                 highscores.Add(PlayerPrefs.GetInt("Highscore: " + (i+1), 0));
@@ -40,12 +43,10 @@ public class EnvManager : MonoBehaviour
                 highscores.Add(0);
             }
         }
-
-
     }
 
     void start(){
-        health = maxHealth;
+        resetHealth();
     }
 
     void OnDestroy()
@@ -70,8 +71,10 @@ public class EnvManager : MonoBehaviour
     public void setHealth(int damage)
     {
         health += damage;
+        textAnimator.AnimateAlert("Health: " + health);
         damageSFX.Play();
         if (health <= 0) { 
+            gameOverSFX.Play();
             if (score > highscores[0])
             {
                 highscores[0] = score;
@@ -82,10 +85,23 @@ public class EnvManager : MonoBehaviour
             }
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            setScore(0);
-            setHealth(100);
-            LoadScene(3); }
-        else if (health > 100) { health = 100; }
+            textAnimator.SkipAnimation();
+            textAnimator.AnimateText("Game Over!");
+            Invoke("loadMenu", 3f);
+        } else if (health > 100) { health = 100; }
+    }
+
+    public void resetHealth(){
+        health = maxHealth;
+    }
+
+    void loadMenu()
+    {
+        
+        setScore(0);
+        resetHealth();
+        LoadScene(3);
+        
     }
 
     public int getScore(){
