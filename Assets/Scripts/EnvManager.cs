@@ -68,6 +68,12 @@ public class EnvManager : MonoBehaviour
         }
     }
 
+    public void setVolume(float volume){
+        damageSFX.volume = volume;
+        gameOverSFX.volume = volume;
+        musicOrganizer.setVolume(volume);
+    }
+
     public void setHealth(int damage)
     {
         health += damage;

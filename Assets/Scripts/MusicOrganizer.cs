@@ -7,6 +7,10 @@ public class MusicOrganizer : MonoBehaviour
     public AudioSource musicSource;
     public AudioClip[] sceneMusicTracks;
 
+    public void setVolume(float volume){
+        musicSource.volume = volume;
+    }
+
     public void PlaySceneMusic(string sceneName)
     {
         // Select the appropriate music track for the scene

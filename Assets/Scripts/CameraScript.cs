@@ -8,7 +8,7 @@ public class CameraScript : MonoBehaviour
     
         private Vector3 _offset;
         [SerializeField] private Transform target;
-        [SerializeField] private float smoothTime;
+        [SerializeField] public float smoothTime;
         private Vector3 _currentVelocity = Vector3.zero;
         private Camera _camera;
         public float screenHeigtht = 10f;

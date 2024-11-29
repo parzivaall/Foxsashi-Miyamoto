@@ -8,10 +8,16 @@ public class ExitMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject optionsMenuUI;
     public GameObject playerController;
-    public Slider sensitivitySlider;
 
+    [Header("Camera Settings")]
+    public Slider smoothingSlider;
     public Camera playerCamera;
-    private float mouseSensitivity = 1f;
+    private float cameraSmoothing = 0.4f;
+    public CameraScript cameraScript;
+
+    [Header("Audio Settings")]
+    public Slider volumeSlider;
+    private float volume = 1f;
     
     //public FirstPersonCamera mouseLookScript;
 
@@ -24,16 +30,28 @@ public class ExitMenu : MonoBehaviour
             playerCamera = Camera.main;
         }
 
-        if (PlayerPrefs.HasKey("Sensitivity"))
+        if (PlayerPrefs.HasKey("CameraSmoothing"))
         {
-            mouseSensitivity = PlayerPrefs.GetFloat("Sensitivity");
-            sensitivitySlider.value = mouseSensitivity;
+            cameraSmoothing = PlayerPrefs.GetFloat("CameraSmoothing");
+            smoothingSlider.value = cameraSmoothing;
         }
         else
         {
             // Default sensitivity
-            mouseSensitivity = 1f;
-            sensitivitySlider.value = mouseSensitivity;
+            cameraSmoothing = 0.4f;
+            smoothingSlider.value = cameraSmoothing;
+        }
+
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            volume = PlayerPrefs.GetFloat("Volume");
+            volumeSlider.value = volume;
+        }
+        else
+        {
+            // Default sensitivity
+            volume = 1f;
+            volumeSlider.value = volume;
         }
 
         
@@ -88,7 +106,7 @@ public class ExitMenu : MonoBehaviour
 
     // public void UpdateSensitivity(float newSensitivity)
     // {
-    //     mouseSensitivity = sensitivitySlider.value;
+    //     mouseSensitivity = smoothingSlider.value;
     //     PlayerPrefs.SetFloat("Sensitivity", mouseSensitivity);
     //     PlayerPrefs.Save();
 
@@ -98,6 +116,23 @@ public class ExitMenu : MonoBehaviour
     //         mouseLookScript.mouseSensitivity = mouseSensitivity;
     //     }
     // }
+    public void UpdateVolume(){
+        volume = volumeSlider.value;
+        EnvManager.Instance.setVolume(volume);
+        PlayerPrefs.SetFloat("Volume", volume);
+        PlayerPrefs.Save();
+    }
+
+    public void UpdateCameraSmoothing(){
+        cameraSmoothing = smoothingSlider.value;
+        PlayerPrefs.SetFloat("CameraSmoothing", cameraSmoothing);
+        PlayerPrefs.Save();
+
+        if (cameraScript != null){
+            cameraScript.smoothTime = cameraSmoothing;
+        }
+    }
+
     void Pause()
     {
         pauseMenuUI.SetActive(true);
