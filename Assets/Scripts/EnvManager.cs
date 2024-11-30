@@ -40,12 +40,17 @@ public class EnvManager : MonoBehaviour
 
         resetHealth();
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 10; i++){
             if (PlayerPrefs.HasKey("Highscore: " + (i+1))){
                 highscores.Add(PlayerPrefs.GetInt("Highscore: " + (i+1), 0));
             } else{
                 highscores.Add(0);
             }
+        }
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            float volume = PlayerPrefs.GetFloat("Volume");
+            setVolume(volume);
         }
         
     }
@@ -120,7 +125,7 @@ public class EnvManager : MonoBehaviour
                 highscores[0] = score;
             }
             highscores.Sort();
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < 10; i++){
                 PlayerPrefs.SetInt("Highscore: " + (i+1), highscores[i]);
             }
             Cursor.lockState = CursorLockMode.None;
