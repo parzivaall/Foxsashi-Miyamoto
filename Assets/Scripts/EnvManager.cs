@@ -47,7 +47,7 @@ public class EnvManager : MonoBehaviour
                 highscores.Add(0);
             }
         }
-        textAnimator.AnimateWarning("Start!");
+        
     }
 
     void start(){
@@ -71,12 +71,21 @@ public class EnvManager : MonoBehaviour
             // Play the appropriate music for the new scene
             musicOrganizer.PlaySceneMusic(currentSceneName);
         }
+        if (scene.name != "mainmenu" || scene.name != "shop"){
+            spawnPoints = GameObject.Find("SpawnPoints").GetComponent<SpawnPoints>();
+            Debug.Log("SpawnPoints");
+            if (spawnPoints != null){
+                StartCoroutine(Spawner());
+            }
 
-        spawnPoints = GameObject.Find("SpawnPoints").GetComponent<SpawnPoints>();
-        Debug.Log("SpawnPoints");
-        if (spawnPoints != null){
-            StartCoroutine(Spawner());
+            textAnimator.AnimateWarning("Start!");
+            StartCoroutine(instructions());
         }
+    }
+
+    IEnumerator instructions(){
+        yield return new WaitForSeconds(2f);
+        textAnimator.AnimateText("Defend the crystal!");
     }
 
     public void setVolume(float volume){
@@ -91,6 +100,15 @@ public class EnvManager : MonoBehaviour
 
     public void setHealth(int damage)
     {
+        if (currentSceneName == "MainMenu" || currentSceneName == "Shop") {
+            if (damage > 0) {
+                health = 1;
+                return;
+            } else {
+                health = 0;
+                return;
+            }
+        }
         health += damage;
         textAnimator.AnimateWarning("Health: " + health);
         damageSFX.Play();
@@ -107,6 +125,16 @@ public class EnvManager : MonoBehaviour
             }
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+                if (playerMovement != null)
+                {
+                    playerMovement.attackOff();
+                    playerMovement.enabled = false;
+                }
+            }
             textAnimator.SkipAnimation();
             textAnimator.AnimateWarning("Game Over!");
             Invoke("loadMenu", 3f);
@@ -122,7 +150,7 @@ public class EnvManager : MonoBehaviour
         
         setScore(0);
         resetHealth();
-        LoadScene(3);
+        LoadScene(4);
         
     }
 

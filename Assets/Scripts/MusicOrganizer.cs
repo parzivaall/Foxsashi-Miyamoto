@@ -23,13 +23,19 @@ public class MusicOrganizer : MonoBehaviour
         switch (sceneName)
         {
             case "MainMenu":
-                trackToPlay = sceneMusicTracks[0]; // Assign the corresponding track index
+                trackToPlay = sceneMusicTracks[1]; // Assign the corresponding track index
                 break;
             case "Shop":
                 trackToPlay = sceneMusicTracks[1];
                 break;
-            case "Caves":
+            case "GameOver":
                 trackToPlay = sceneMusicTracks[2];
+                break;
+            case "PipeYard":
+                trackToPlay = sceneMusicTracks[3];
+                break;
+            case "Expanse":
+                trackToPlay = sceneMusicTracks[4];
                 break;
             default:
                 trackToPlay = sceneMusicTracks[0]; // Default to first track if none specified

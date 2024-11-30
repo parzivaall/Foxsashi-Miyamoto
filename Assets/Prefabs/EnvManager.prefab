@@ -678,6 +678,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d043624d9fb4065578302d14464afec0, type: 3}
   - {fileID: 8300000, guid: 8af7c89e3eed4eeb3883fff6c1d724e1, type: 3}
   - {fileID: 8300000, guid: 0ca028ee2d2315806b4530e068fec0a2, type: 3}
+  - {fileID: 8300000, guid: c7bd54d0cfc1ba414b55d486ebd338e2, type: 3}
+  - {fileID: 8300000, guid: 0dd9c7d04dce30cfaa83ee80789d2d99, type: 3}
 --- !u!82 &8953954337627790317
 AudioSource:
   m_ObjectHideFlags: 0
@@ -963,7 +965,7 @@ MonoBehaviour:
   highscores: 
   enemyTypes:
   - {fileID: 3260145933749469703, guid: c484d65787bb6e18e9dd071509c1b45b, type: 3}
-  spawnTimer: 10
+  spawnTimer: 5
 --- !u!1 &9218647886858836197
 GameObject:
   m_ObjectHideFlags: 0

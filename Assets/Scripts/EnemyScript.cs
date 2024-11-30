@@ -68,7 +68,7 @@ public class EnemyScript : MonoBehaviour
     void OnDestroy()
     {
         StopCoroutine(RunEveryTwoSeconds());
-        Instantiate(deathExplosion, this.transform.position, Quaternion.identity);
+        //Instantiate(deathExplosion, this.transform.position, Quaternion.identity);
         EnvManager.Instance.addScore(1);
     }
 }

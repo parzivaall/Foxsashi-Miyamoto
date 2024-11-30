@@ -78,9 +78,14 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void attackOff(){
+        attackCheck.gameObject.SetActive(false);
+        StopAllCoroutines();
+    }
+
     IEnumerator AttackDelay(){
         attackCheck.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         attackCheck.gameObject.SetActive(false);
     }
 }
