@@ -8,13 +8,12 @@ public class ExitMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject optionsMenuUI;
-    public GameObject playerController;
 
     [Header("Camera Settings")]
     public Slider smoothingSlider;
-    public Camera playerCamera;
+    private Camera playerCamera;
     public float cameraSmoothing = 0.4f;
-    public CameraScript cameraScript;
+    private CameraScript cameraScript;
 
     [Header("Audio Settings")]
     public Slider volumeSlider;
@@ -27,6 +26,7 @@ public class ExitMenu : MonoBehaviour
 
         if(playerCamera == null){
             playerCamera = Camera.main;
+            cameraScript = playerCamera.GetComponent<CameraScript>();
         }
 
         if (PlayerPrefs.HasKey("CameraSmoothing"))
@@ -85,17 +85,6 @@ public class ExitMenu : MonoBehaviour
         optionsMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
-
-        if(playerController != null){
-            playerController.GetComponent<MonoBehaviour>().enabled = true;
-        }
-
-        // Cursor.lockState = CursorLockMode.Locked;
-        // Cursor.visible = false;
-
-        if(playerCamera != null && playerCamera.GetComponent<MonoBehaviour>() != null){
-            playerCamera.GetComponent<MonoBehaviour>().enabled = true;
-        }
     }
 
      public void OpenOptions()
@@ -144,19 +133,11 @@ public class ExitMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-        
-        if(playerController != null){
-            playerController.GetComponent<MonoBehaviour>().enabled = false;
-        }
             
-        // Cursor.lockState = CursorLockMode.None;
-        // Cursor.visible = true;
-        
+    }
 
-        if(playerCamera != null && playerCamera.GetComponent<MonoBehaviour>() != null){
-            playerCamera.GetComponent<MonoBehaviour>().enabled = false;
-        }
-            
+    public void GameOver(){
+        EnvManager.Instance.setHealth(-100);
     }
 
     public void QuitGame()

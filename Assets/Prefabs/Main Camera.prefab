@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothTime: 0.4
+  smoothTime: 0.40860987
   screenHeigtht: 10
 --- !u!1 &8285815785278311491
 GameObject:
@@ -346,7 +346,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 80
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

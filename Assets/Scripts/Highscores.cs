@@ -19,7 +19,7 @@ public class Highscores : MonoBehaviour
         }
         highscores.Sort();
         highscores.Reverse();
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 10; i++){
             text.text += (i + 1) + ": " + highscores[i] + " Birds Plucked\n";
         }
         
