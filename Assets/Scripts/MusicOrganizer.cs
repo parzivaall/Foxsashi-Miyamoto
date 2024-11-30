@@ -11,6 +11,10 @@ public class MusicOrganizer : MonoBehaviour
         musicSource.volume = volume;
     }
 
+    public float getVolume(){
+        return musicSource.volume;
+    }
+
     public void PlaySceneMusic(string sceneName)
     {
         // Select the appropriate music track for the scene

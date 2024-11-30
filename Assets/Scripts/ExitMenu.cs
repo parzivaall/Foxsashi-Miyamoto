@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ExitMenu : MonoBehaviour
 {
@@ -12,14 +13,12 @@ public class ExitMenu : MonoBehaviour
     [Header("Camera Settings")]
     public Slider smoothingSlider;
     public Camera playerCamera;
-    private float cameraSmoothing = 0.4f;
+    public float cameraSmoothing = 0.4f;
     public CameraScript cameraScript;
 
     [Header("Audio Settings")]
     public Slider volumeSlider;
-    private float volume = 1f;
-    
-    //public FirstPersonCamera mouseLookScript;
+    public float volume = 1f;
 
     void Start()
     {
@@ -34,27 +33,29 @@ public class ExitMenu : MonoBehaviour
         {
             cameraSmoothing = PlayerPrefs.GetFloat("CameraSmoothing");
             smoothingSlider.value = cameraSmoothing;
+            cameraScript.smoothTime = cameraSmoothing;
         }
         else
         {
             // Default sensitivity
             cameraSmoothing = 0.4f;
             smoothingSlider.value = cameraSmoothing;
+            cameraScript.smoothTime = cameraSmoothing;
         }
 
         if (PlayerPrefs.HasKey("Volume"))
         {
             volume = PlayerPrefs.GetFloat("Volume");
             volumeSlider.value = volume;
+            EnvManager.Instance.setVolume(volume);
         }
         else
         {
             // Default sensitivity
             volume = 1f;
             volumeSlider.value = volume;
+            EnvManager.Instance.setVolume(volume);
         }
-
-        
     }
 
     void Update()
@@ -71,6 +72,11 @@ public class ExitMenu : MonoBehaviour
                 Pause();
             }
         }
+
+        if (EnvManager.Instance.getVolume() != volume){
+            EnvManager.Instance.setVolume(volume);
+        }
+        
     }
 
     public void Resume()
@@ -161,4 +167,6 @@ public class ExitMenu : MonoBehaviour
             Application.Quit();
         #endif
     }
+
+    
 }

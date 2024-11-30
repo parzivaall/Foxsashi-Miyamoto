@@ -64,5 +64,12 @@ public class EnemyScript : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
     }
+
+    void OnDestroy()
+    {
+        StopCoroutine(RunEveryTwoSeconds());
+        Instantiate(deathExplosion, this.transform.position, Quaternion.identity);
+        EnvManager.Instance.addScore(1);
+    }
 }
 

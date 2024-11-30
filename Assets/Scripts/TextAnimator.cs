@@ -19,6 +19,9 @@ public class TextAnimator : MonoBehaviour
     [Header("Alert Settings")]
     [SerializeField] private TMP_Text alert;
 
+    [Header("Warning Settings")]
+    [SerializeField] private TMP_Text warning;
+
     private void Start()
     {
         // Ensure text starts invisible
@@ -31,15 +34,27 @@ public class TextAnimator : MonoBehaviour
     public void AnimateText(string textToShow)
     {
         // Stop any existing animations
-        StopAllCoroutines();
+        SkipAnimation();
         
         // Start the sequence
         StartCoroutine(TextSequence(textToShow));
     }
 
     public void AnimateAlert(string textToShow){
-        StopAllCoroutines();
+        SkipAnimation();
         StartCoroutine(Alert(textToShow));
+    }
+
+    public void AnimateWarning(string textToShow){
+        SkipAnimation();
+        StartCoroutine(Warning(textToShow));
+    }
+
+    private IEnumerator Warning(string textToShow){
+        warning.text = textToShow;
+        warning.alpha = 1;
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(FadeOutText(warning));
     }
 
     private IEnumerator Alert(string textToShow){
@@ -110,6 +125,12 @@ public class TextAnimator : MonoBehaviour
         if (textComponent != null)
         {
             textComponent.alpha = 0;
+        }
+        if (alert != null){
+            alert.alpha = 0;
+        }
+        if (warning != null){
+            warning.alpha = 0;
         }
     }
 }

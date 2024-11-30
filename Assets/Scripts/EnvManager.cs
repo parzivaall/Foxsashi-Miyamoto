@@ -15,6 +15,10 @@ public class EnvManager : MonoBehaviour
     public TextAnimator textAnimator;
     public MusicOrganizer musicOrganizer;
     public List<int> highscores = new List<int>();
+    
+    private SpawnPoints spawnPoints;
+    public GameObject[] enemyTypes;
+    public float spawnTimer = 5f;
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class EnvManager : MonoBehaviour
                 highscores.Add(0);
             }
         }
+        textAnimator.AnimateWarning("Start!");
     }
 
     void start(){
@@ -66,6 +71,12 @@ public class EnvManager : MonoBehaviour
             // Play the appropriate music for the new scene
             musicOrganizer.PlaySceneMusic(currentSceneName);
         }
+
+        spawnPoints = GameObject.Find("SpawnPoints").GetComponent<SpawnPoints>();
+        Debug.Log("SpawnPoints");
+        if (spawnPoints != null){
+            StartCoroutine(Spawner());
+        }
     }
 
     public void setVolume(float volume){
@@ -74,12 +85,17 @@ public class EnvManager : MonoBehaviour
         musicOrganizer.setVolume(volume);
     }
 
+    public float getVolume(){
+        return musicOrganizer.getVolume();
+    }
+
     public void setHealth(int damage)
     {
         health += damage;
-        textAnimator.AnimateAlert("Health: " + health);
+        textAnimator.AnimateWarning("Health: " + health);
         damageSFX.Play();
         if (health <= 0) { 
+            StopAllCoroutines();
             gameOverSFX.Play();
             if (score > highscores[0])
             {
@@ -92,7 +108,7 @@ public class EnvManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             textAnimator.SkipAnimation();
-            textAnimator.AnimateText("Game Over!");
+            textAnimator.AnimateWarning("Game Over!");
             Invoke("loadMenu", 3f);
         } else if (health > 100) { health = 100; }
     }
@@ -138,5 +154,25 @@ public class EnvManager : MonoBehaviour
         textAnimator.AnimateText(textToAppear);
     }
 
+    public void warning(string textToAppear){
+        textAnimator.AnimateWarning(textToAppear);
+    }
+
+    public void alert(string textToAppear){
+        textAnimator.AnimateAlert(textToAppear);
+    }
+
+    private IEnumerator Spawner(){
+        while(true){
+            yield return new WaitForSeconds(spawnTimer);
+            spawnTimer -= 0.1f;
+            if(spawnTimer <= 0.1f){
+                spawnTimer = 0.1f;
+            }
+            int ran = Random.Range(0, enemyTypes.Length);
+            GameObject Enemy = enemyTypes[ran];
+            Instantiate(Enemy, spawnPoints.GetRandomSpawnPoint(), Quaternion.identity);
+        }
+    }
 
 }

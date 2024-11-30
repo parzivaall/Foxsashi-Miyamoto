@@ -20,8 +20,9 @@ public class AttackCheck : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {   
-            Instantiate(deathExplosion, collision.transform.position, Quaternion.identity);
+            //Instantiate(deathExplosion, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
+            
             
         }
     }

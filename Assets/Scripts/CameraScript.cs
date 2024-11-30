@@ -21,6 +21,7 @@ public class CameraScript : MonoBehaviour
             _offset = transform.position - target.position;
             _camera = GetComponent<Camera>();
             _camera.orthographicSize = screenHeigtht;
+            
         }
 
         private void LateUpdate()
