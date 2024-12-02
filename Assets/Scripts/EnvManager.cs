@@ -76,15 +76,24 @@ public class EnvManager : MonoBehaviour
             // Play the appropriate music for the new scene
             musicOrganizer.PlaySceneMusic(currentSceneName);
         }
-        if (scene.name != "mainmenu" || scene.name != "shop"){
-            spawnPoints = GameObject.Find("SpawnPoints").GetComponent<SpawnPoints>();
-            Debug.Log("SpawnPoints");
-            if (spawnPoints != null){
-                StartCoroutine(Spawner());
-            }
+        if (scene.name != "MainMenu" || scene.name != "Shop" || scene.name != "GameOver"){
 
-            textAnimator.AnimateWarning("Start!");
-            StartCoroutine(instructions());
+            try
+            {
+                spawnPoints = GameObject.Find("SpawnPoints").GetComponent<SpawnPoints>();
+                if (spawnPoints != null){
+                    StartCoroutine(Spawner());
+                }
+                textAnimator.AnimateWarning("Start!");
+                StartCoroutine(instructions());
+            }
+            catch
+            {
+                Debug.LogError("No SpawnPoints found in scene");
+            }
+            
+        } else {
+            spawnPoints = null;
         }
     }
 
