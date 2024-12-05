@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExitMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 6223610298925590583, guid: bff11f6ca875cc4a4a8dedd4e1919cd9, type: 3}
+      propertyPath: m_IsOn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

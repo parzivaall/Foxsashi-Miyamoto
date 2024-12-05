@@ -19,6 +19,10 @@ public class ExitMenu : MonoBehaviour
     public Slider volumeSlider;
     public float volume = 1f;
 
+    [Header("Difficulty Settings")]
+    public Toggle hardToggle;
+    public bool hard = false;
+
     void Start()
     {
         // Ensure menu is hidden at start
@@ -55,6 +59,19 @@ public class ExitMenu : MonoBehaviour
             volume = 1f;
             volumeSlider.value = volume;
             EnvManager.Instance.setVolume(volume);
+        }
+
+        if (PlayerPrefs.HasKey("Hard"))
+        {
+            hard = PlayerPrefs.GetInt("Hard") == 1;
+            hardToggle.isOn = hard;
+            EnvManager.Instance.setHard(hard);
+        }
+        else
+        {
+            hard = false;
+            hardToggle.isOn = hard;
+            EnvManager.Instance.setHard(hard);
         }
     }
 
@@ -134,6 +151,15 @@ public class ExitMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
             
+    }
+
+    public void ToggleHardMode()
+    {
+        hard = !hard;
+        EnvManager.Instance.setHard(hard);
+        // Store the value of hard in the player prefs as an int, where true = 1 and false = 0
+        PlayerPrefs.SetInt("Hard", hard ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     public void GameOver(){

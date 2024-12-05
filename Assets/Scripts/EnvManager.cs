@@ -20,6 +20,8 @@ public class EnvManager : MonoBehaviour
     public GameObject[] enemyTypes;
     public float spawnTimer = 5f;
 
+    private bool hard;
+
     private void Awake()
     {
         if (Instance != null)
@@ -39,6 +41,10 @@ public class EnvManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         resetHealth();
+
+        if (PlayerPrefs.HasKey("Hard")){
+            hard = PlayerPrefs.GetInt("Hard") == 1;
+        }
 
         for (int i = 0; i < 10; i++){
             if (PlayerPrefs.HasKey("Highscore: " + (i+1))){
@@ -126,7 +132,8 @@ public class EnvManager : MonoBehaviour
         health += damage;
         textAnimator.AnimateWarning("Health: " + health);
         damageSFX.Play();
-        if (health <= 0) { 
+        if (health <= 0) {
+            spawnTimer = 5f;
             StopAllCoroutines();
             gameOverSFX.Play();
             if (score > highscores[0])
@@ -207,7 +214,11 @@ public class EnvManager : MonoBehaviour
     private IEnumerator Spawner(){
         while(true){
             yield return new WaitForSeconds(spawnTimer);
-            spawnTimer -= 0.1f;
+            if (!hard){
+                spawnTimer -= 0.1f;
+            } else {
+                spawnTimer -= 3f;
+            }
             if(spawnTimer <= 0.1f){
                 spawnTimer = 0.1f;
             }
@@ -215,6 +226,10 @@ public class EnvManager : MonoBehaviour
             GameObject Enemy = enemyTypes[ran];
             Instantiate(Enemy, spawnPoints.GetRandomSpawnPoint(), Quaternion.identity);
         }
+    }
+
+    public void setHard(bool hardMode){
+        this.hard = hardMode;
     }
 
 }
